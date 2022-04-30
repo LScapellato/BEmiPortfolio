@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,8 @@ public class ExperienciaLaboral implements Serializable {
     @Id
     @GeneratedValue
     private int id;
-
+    
+    @NotNull
     private String nombre_empresa;
     private String puesto;
     private boolean actual;

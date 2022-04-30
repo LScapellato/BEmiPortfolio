@@ -39,9 +39,10 @@ public class PersonaController {
     }
 
     @PostMapping("/personas/crear")
-    public void createPersona(@RequestBody Persona perso) {
+    public String createPersona(@RequestBody Persona perso) {
         interPersona.savePersona(perso);
         //devuelve string mensaje 
+        return "La persona fue creada";
 
     }
 
