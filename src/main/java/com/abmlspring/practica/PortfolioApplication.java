@@ -23,7 +23,7 @@ public class PortfolioApplication {
 			}
 		};
 	}
-        
+//        ("http://localhost:4200").allowedMethods("*").allowedHeaders("*")
 //        @EnableWebSecurity
 //	@Configuration
 //	class WebSecurityConfig extends WebSecurityConfigurerAdapter {

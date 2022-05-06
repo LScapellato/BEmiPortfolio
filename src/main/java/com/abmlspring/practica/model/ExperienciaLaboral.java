@@ -5,7 +5,7 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "experiencia_laboral")
+
 public class ExperienciaLaboral implements Serializable {
 
     @Id
@@ -28,6 +28,7 @@ public class ExperienciaLaboral implements Serializable {
     private Date fecha_fin;
     private String descripcion;
     private String tipoempleo;
+    private int fk_persona;
 //    @OneToOne(cascade= CascadeType.ALL)
 //    @JoinColumn(name ="id")
 //    private Persona persona;
@@ -40,8 +41,11 @@ public class ExperienciaLaboral implements Serializable {
             Date fecha_inicio,
             Date fecha_fin,
             String descripcion,
-            String tipoempleo) {
-
+            String tipoempleo, 
+            int fk_persona
+    )
+    {
+            
         this.id = id;
         this.nombre_empresa = nombre_empresa;
         this.puesto= puesto;
@@ -50,6 +54,7 @@ public class ExperienciaLaboral implements Serializable {
         this.fecha_fin = fecha_fin;
         this.descripcion = descripcion;
         this.tipoempleo = tipoempleo;
+        this.fk_persona = fk_persona;
     }
 
 }
