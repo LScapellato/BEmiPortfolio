@@ -2,13 +2,13 @@ package com.abmlspring.practica.controller;
 
 import com.abmlspring.practica.model.Persona;
 import com.abmlspring.practica.service.IPersonaService;
-import java.io.Console;
+
 import java.sql.Date;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +28,7 @@ public class PersonaController {
     public List<Persona> getPersona() {
         return interPersona.getPersonas();
     }
-
+    
     @GetMapping("/personas/detalle/{nombre}")
     public Persona getByNombre(@PathVariable("nombre") String nombre) {
 //        if(!interPersona.existsByNombre(nombre))
@@ -37,7 +37,7 @@ public class PersonaController {
         Persona perso = interPersona.findByNombre(nombre);
         return perso;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/personas/crear")
     public String createPersona(@RequestBody Persona perso) {
         interPersona.savePersona(perso);
@@ -45,13 +45,13 @@ public class PersonaController {
         return "La persona fue creada";
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/personas/borrar/{id}")
     public void deletePersona(@PathVariable Long id) {
         interPersona.deletePersona(id);
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/personas/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
             @RequestParam("nombre") String nuevoNombre,
@@ -61,8 +61,11 @@ public class PersonaController {
             @RequestParam("telefono") String nuevoTelefono,
             @RequestParam("mail") String nuevoMail,
             @RequestParam("descripcion") String nuevaDescripcion,
-            @RequestParam("imagenurl") String nuevaImagenUrl
-    ) {
+            @RequestParam("imagenurl") String nuevaImagenUrl,
+            @RequestParam("grado") String nuevoGrado
+            
+    ) 
+    {
 
         //buscamos la persona a editar
         Persona perso = interPersona.findPersona(id);
@@ -75,6 +78,8 @@ public class PersonaController {
         perso.setTelefono(nuevoTelefono);
         perso.setDescripcion(nuevaDescripcion);
         perso.setImagenurl(nuevaImagenUrl);
+        perso.setGrado(nuevoGrado);
+        
         interPersona.savePersona(perso);
 
         return perso;

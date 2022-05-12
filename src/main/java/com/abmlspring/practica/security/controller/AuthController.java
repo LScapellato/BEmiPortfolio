@@ -56,7 +56,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -95,7 +95,7 @@ public class AuthController {
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         usuarioService.deleteUsuario(id);
@@ -103,7 +103,7 @@ public class AuthController {
 
     }
 
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuario/user")
     @ResponseBody
     public List<Usuario> getUsuarios() {

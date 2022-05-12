@@ -2,15 +2,15 @@ package com.abmlspring.practica.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import javax.persistence.Table;
-
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,14 +32,25 @@ public class Persona implements Serializable {
     private String descripcion;
     private String imagenurl;
     private Date fecha_nacimiento;
+    private String grado;
 //    @OneToOne (mappedBy="persona")
 //    private ExperienciaLaboral experiencia;
+    @OneToMany
+    (fetch = FetchType.EAGER, mappedBy="persona",cascade=CascadeType.ALL)
+    private Set<Educacion> fk_educacion ;
+    
+    @OneToMany
+    (fetch = FetchType.EAGER, mappedBy="persona",cascade=CascadeType.ALL)
+    private Set<Skills> fk_skills ;
 
-    public Persona() {
+    public Persona() { super();
     }
 
-    public Persona(Long id, String nombre, String apellido, int edad, String telefono, String mail, String descripcion, String imagenurl, Date fecha_nacimiento) {
-        this.id = id;
+   
+
+    
+
+    public Persona(String nombre, String apellido, int edad, String telefono, String mail, String descripcion, String imagenurl, Date fecha_nacimiento, String grado, Set<Educacion> fk_educacion, Set<Skills> fk_skills) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -48,6 +59,9 @@ public class Persona implements Serializable {
         this.descripcion = descripcion;
         this.imagenurl = imagenurl;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.grado = grado;
+        this.fk_educacion = fk_educacion;
+        this.fk_skills= fk_skills;
     }
     
-}
+}   

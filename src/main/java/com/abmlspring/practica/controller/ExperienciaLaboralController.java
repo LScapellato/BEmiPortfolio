@@ -66,6 +66,7 @@ public class ExperienciaLaboralController {
         expe.setFecha_inicio(exlab.getFecha_inicio());
         expe.setFecha_fin(exlab.getFecha_fin());
         expe.setTipoempleo(exlab.getTipoempleo());
+        expe.setUrl_imagen(exlab.getUrl_imagen());
         
 //        expe.setNombre_empresa(nuevoNombreEmpresa);
 //        expe.setActual(nuevoActual);

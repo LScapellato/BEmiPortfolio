@@ -28,6 +28,7 @@ public class ExperienciaLaboral implements Serializable {
     private Date fecha_fin;
     private String descripcion;
     private String tipoempleo;
+    private String url_imagen;
     private int fk_persona;
 //    @OneToOne(cascade= CascadeType.ALL)
 //    @JoinColumn(name ="id")
@@ -42,6 +43,7 @@ public class ExperienciaLaboral implements Serializable {
             Date fecha_fin,
             String descripcion,
             String tipoempleo, 
+            String url_imagen,
             int fk_persona
     )
     {
@@ -54,6 +56,7 @@ public class ExperienciaLaboral implements Serializable {
         this.fecha_fin = fecha_fin;
         this.descripcion = descripcion;
         this.tipoempleo = tipoempleo;
+        this.url_imagen = url_imagen;
         this.fk_persona = fk_persona;
     }
 
