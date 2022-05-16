@@ -3,7 +3,7 @@ package com.abmlspring.practica.controller;
 import com.abmlspring.practica.model.Persona;
 import com.abmlspring.practica.service.IPersonaService;
 
-import java.sql.Date;
+
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,8 +28,12 @@ public class PersonaController {
     public List<Persona> getPersona() {
         return interPersona.getPersonas();
     }
-    
-    @GetMapping("/personas/detalle/{nombre}")
+     @GetMapping("/personas/detalle/{id}")
+    public Persona getByid(@PathVariable ("id") long id) {
+     Persona perso  =  interPersona.findPersona(id);
+     return perso;
+    } 
+    @GetMapping("/personas/name/{nombre}")
     public Persona getByNombre(@PathVariable("nombre") String nombre) {
 //        if(!interPersona.existsByNombre(nombre))
 //            return interPersona.notify();
@@ -53,37 +57,26 @@ public class PersonaController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/personas/editar/{id}")
-    public Persona editPersona(@PathVariable Long id,
-            @RequestParam("nombre") String nuevoNombre,
-            @RequestParam("apellido") String nuevoApellido,
-            @RequestParam("edad") int nuevaEdad,
-            @RequestParam("fecha_nacimiento") Date nuevoFechaNacimiento,
-            @RequestParam("telefono") String nuevoTelefono,
-            @RequestParam("mail") String nuevoMail,
-            @RequestParam("descripcion") String nuevaDescripcion,
-            @RequestParam("imagenurl") String nuevaImagenUrl,
-            @RequestParam("grado") String nuevoGrado
-            
-    ) 
-    {
-
-        //buscamos la persona a editar
-        Persona perso = interPersona.findPersona(id);
-        //esto puede ir tambien en service 
-        perso.setApellido(nuevoApellido);
-        perso.setNombre(nuevoNombre);
-        perso.setEdad(nuevaEdad);
-        perso.setFecha_nacimiento(nuevoFechaNacimiento);
-        perso.setMail(nuevoMail);
-        perso.setTelefono(nuevoTelefono);
-        perso.setDescripcion(nuevaDescripcion);
-        perso.setImagenurl(nuevaImagenUrl);
-        perso.setGrado(nuevoGrado);
+    public Persona editPersona(@PathVariable("id") long id,@RequestBody Persona perso)
+     
+    { 
+        Persona per = interPersona.findPersona(id);
         
+        per.setNombre(perso.getNombre());
+        per.setApellido(perso.getApellido());
+        per.setDescripcion(perso.getDescripcion());
+        per.setEdad(perso.getEdad());
+        per.setMail(perso.getMail());
+        per.setGrado(perso.getGrado());
+        per.setImagenurl(perso.getImagenurl());
+        per.setFecha_nacimiento(perso.getFecha_nacimiento());
+        per.setTelefono(perso.getTelefono());
+     
         interPersona.savePersona(perso);
 
         return perso;
 
     }
 
+    
 }
